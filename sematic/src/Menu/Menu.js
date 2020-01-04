@@ -1,0 +1,35 @@
+import React, { Component } from 'react'
+import { Menu } from 'semantic-ui-react'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import Popup from 'semantic-ui-react/dist/commonjs/modules/Popup'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+
+export default class MainMenu extends React.PureComponent {
+  handleMenuClick = (e, {name}) => this.props.toggleSidebar()
+
+  render () {
+    const {sidebarIsVisible = false} = this.props
+
+    return (
+      <Menu secondary>
+        <Menu.Item
+          name='Toggle sidebar'
+          onClick={this.handleMenuClick}
+        >
+          <Icon color='blue' name={sidebarIsVisible ? 'toggle left' : 'toggle right'}/>
+        </Menu.Item>
+
+        <div className='title'>
+          Admin Panel
+        </div>
+
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            <Button primary onClick={() => alert('Log out')}>Log out</Button>
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
+    )
+  }
+}
