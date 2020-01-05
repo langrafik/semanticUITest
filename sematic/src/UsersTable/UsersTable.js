@@ -36,7 +36,13 @@ class UsersTable extends React.PureComponent {
         users = []
       } = this.props
 
-      const filteredUsers = users.filter(user => user[filterBy].toUpperCase().includes(searchingValue))
+      const filteredUsers = users.filter(user => {
+        if (user[filterBy]) {
+          return user[filterBy].toUpperCase().includes(searchingValue)
+        }
+
+        return false
+      })
 
       this.setState({
         filteredUsers,
