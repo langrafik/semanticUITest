@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Menu } from 'semantic-ui-react'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
-import Popup from 'semantic-ui-react/dist/commonjs/modules/Popup'
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import PropTypes from 'prop-types'
 
 export default class MainMenu extends React.PureComponent {
-  handleMenuClick = (e, {name}) => this.props.toggleSidebar()
+  handleMenuClick = () => this.props.toggleSidebar()
 
   render () {
     const {sidebarIsVisible = false} = this.props
@@ -32,4 +31,9 @@ export default class MainMenu extends React.PureComponent {
       </Menu>
     )
   }
+}
+
+MainMenu.propTypes = {
+  toggleSidebar: PropTypes.func.isRequired,
+  sidebarIsVisible: PropTypes.bool
 }

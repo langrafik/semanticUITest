@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Table } from 'semantic-ui-react'
 import Input from 'semantic-ui-react/dist/commonjs/elements/Input'
 
@@ -117,7 +118,8 @@ class UsersTable extends React.PureComponent {
 }
 
 UsersTable.propTypes = {
-  //getUsers: PropTypes.func.isRequired
+  getUsers: PropTypes.func.isRequired,
+  error: PropTypes.bool
 }
 
 export default UsersTable
