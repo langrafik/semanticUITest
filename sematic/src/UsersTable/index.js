@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { connect } from 'react-redux';
 import UsersTable from './UsersTable';
 
@@ -21,6 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
       payload: true,
     });
     try {
+      // eslint-disable-next-line no-undef
       const result = await fetch('https://jsonplaceholder.typicode.com/users').then((result) => result.json());
       dispatch({
         type: 'GET_USERS_SUCCESS',
