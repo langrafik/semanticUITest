@@ -17,6 +17,10 @@ class AdminSidebar extends React.PureComponent {
       visible,
     } = this.state;
 
+    const {
+      handleAuth
+    } = this.props
+
     return (
       <Sidebar.Pushable as={Segment}>
         <Sidebar
@@ -49,7 +53,7 @@ class AdminSidebar extends React.PureComponent {
         </Sidebar>
         <Sidebar.Pusher>
           <div className="content">
-            <MainMenu toggleSidebar={this.handleAnimationChange} sidebarIsVisible={visible} />
+            <MainMenu toggleSidebar={this.handleAnimationChange} sidebarIsVisible={visible} handleAuth={handleAuth} />
             <UsersTable />
           </div>
         </Sidebar.Pusher>

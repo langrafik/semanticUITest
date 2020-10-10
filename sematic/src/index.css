@@ -29,3 +29,11 @@ code {
     font-size: 25px;
     color: #2185d0;
 }
+
+.ui.container.login-form {
+    padding: 100px;
+    min-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

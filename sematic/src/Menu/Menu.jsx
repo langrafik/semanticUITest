@@ -8,7 +8,7 @@ export default class MainMenu extends React.PureComponent {
   handleMenuClick = () => this.props.toggleSidebar()
 
   render() {
-    const { sidebarIsVisible = false } = this.props;
+    const { sidebarIsVisible = false, handleAuth } = this.props;
 
     return (
       <Menu secondary>
@@ -20,12 +20,12 @@ export default class MainMenu extends React.PureComponent {
         </Menu.Item>
 
         <div className="title">
-          Admin Panel
+          Contact list
         </div>
 
         <Menu.Menu position="right">
           <Menu.Item>
-            <Button primary onClick={() => alert('Log out')}>Log out</Button>
+            <Button primary onClick={handleAuth}>Log out</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

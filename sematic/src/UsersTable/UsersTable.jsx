@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'semantic-ui-react';
+import { Table, Checkbox, Button, Icon } from 'semantic-ui-react';
 import Input from 'semantic-ui-react/dist/commonjs/elements/Input';
 
 const columns = [
@@ -10,12 +10,14 @@ const columns = [
   { name: 'City', dataField: 'address.city' },
   { name: 'Phone', dataField: 'phone' },
   { name: 'Company', dataField: 'company.name' },
+  { name: '', dataField: '' },
 ];
 
 class UsersTable extends React.PureComponent {
   state = {
     users: [],
     filteredUsers: [],
+    checkedUsers: [],
     showFilteredUsers: false,
   }
 
@@ -52,14 +54,50 @@ class UsersTable extends React.PureComponent {
     };
   }
 
+  handleCheck({ checked }, user) {
+    const {
+      checkedUsers = []
+    } = this.state;
+
+    if (checked) {
+      checkedUsers.push(user);
+    } else {
+      checkedUsers.splice(checkedUsers.indexOf(user), 1);
+    }
+
+    this.setState({
+      checkedUsers: [...checkedUsers]
+    })
+  }
+
+  handleDelete = async () => {
+    const {
+      checkedUsers = []
+    } = this.state;
+    const {
+      deleteUsers,
+      getUsers
+    } = this.props;
+
+    const res = await deleteUsers(checkedUsers.map(({ id }) => id));
+
+    this.setState({
+      checkedUsers: []
+    });
+
+    getUsers();
+  }
+
   render() {
     const {
       users = [],
+      handleModal,
       error = false,
     } = this.props;
 
     const {
       showFilteredUsers = false,
+      checkedUsers = [],
       filteredUsers = [],
     } = this.state;
 
@@ -77,9 +115,8 @@ class UsersTable extends React.PureComponent {
                   {column.name === 'Name'
                     ? (
                       <Input
-                        placeholder={column.name}
+                        placeholder='Search by name ...'
                         icon="search"
-                        transparent
                         fluid
                         onChange={this.filterUsers('name')}
                       />
@@ -114,11 +151,50 @@ class UsersTable extends React.PureComponent {
                   <Table.Cell>{city}</Table.Cell>
                   <Table.Cell>{phone}</Table.Cell>
                   <Table.Cell>{companyName}</Table.Cell>
+                  <Table.Cell>
+                    <Checkbox onChange={(event, checked) => this.handleCheck(checked, user)} />
+                  </Table.Cell>
                 </Table.Row>
               );
             })
           }
         </Table.Body>
+
+        {
+          !data.length &&
+          <Table.Row>
+            <h2>No data</h2>
+          </Table.Row>
+        }
+
+        <Table.Footer fullWidth>
+          <Table.HeaderCell colSpan='1'>
+            <Button
+              floated='right'
+              icon
+              onClick={handleModal}
+              labelPosition='left'
+              color='green'
+              size='small'
+            >
+              <Icon name='user' /> Add User
+          </Button>
+          </Table.HeaderCell>
+          <Table.HeaderCell colSpan='6'>
+            <Button
+              floated='right'
+              icon
+              color='red'
+              onClick={this.handleDelete}
+              disabled={!checkedUsers.length}
+              labelPosition='left'
+              size='medium'
+            >
+              <Icon name='delete' />Delete checked {checkedUsers.length > 1 ? 'users' : 'user'}
+            </Button>
+          </Table.HeaderCell>
+
+        </Table.Footer>
       </Table>
     );
   }
